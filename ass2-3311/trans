@@ -1,0 +1,95 @@
+#!/usr/bin/python3
+# COMP3311 21T3 Ass2 ... print a transcript for a given student
+# Steven Chye z5257742
+
+import sys
+import psycopg2
+import re
+from helpers import getStudent, getTrans
+
+# define any local helper functions here
+
+### set up some globals
+
+# Displays on transcripts
+fails = ['AF', 'FL', 'UF', 'E', 'F']
+Xuoc = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+nothing = ['AS', 'AW', 'PW', 'NA', 'RD', 'NF', 'LE', 'PE', 'WD', 'WJ']
+
+# Rules on passing to calculate UOC and WAM
+rule = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+x_uoc = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+wam = ['HD', 'DN', 'CR', 'PS', 'AF', 'FL', 'UF', 'E', 'F']
+
+usage = f"Usage: {sys.argv[0]} zID"
+db = None
+
+### process command-line args
+
+argc = len(sys.argv)
+if argc < 2:
+	print(usage)
+	exit(1)
+zid = sys.argv[1]
+if zid[0] == 'z':
+	zid = zid[1:8]
+digits = re.compile("^\d{7}$")
+if not digits.match(zid):
+	print(f"Invalid student ID {zid}")
+	exit(1)
+
+# manipulate database
+
+try:
+	db = psycopg2.connect("dbname=mymyunsw")
+	stuInfo = getStudent(db,zid)
+	if not stuInfo:
+		print(f"Invalid student ID {zid}")
+		exit()
+	
+	transInfo = getTrans(db, zid)
+	uoc = 0
+	marks = 0
+	markDenom = 0
+
+	print(str(stuInfo[0]) + ' ' + stuInfo[1]+ ', ' + stuInfo[2])
+
+	for tup in transInfo:
+		# Assigning to variable names for readability
+		transCode = tup[0]
+		transTerm = tup[1]
+		transSubject = tup[2]
+		transMark = tup[3]
+		transGrade = tup[4]
+		transUOC = tup[5]
+
+		# Fail condition
+		if any(transGrade in word for word in fails):
+			print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}   fail")
+
+		# No UOC count condition
+		elif any(transGrade in word for word in nothing):
+			print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}")
+
+		# UOC count condition
+		elif any(transGrade in word for word in Xuoc):
+			print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}  {transUOC:2d}uoc")
+
+		# If grade is counted towards uoc, increment 
+		if any(transGrade in word for word in x_uoc):
+			uoc += transUOC
+
+		marks = marks + (int(transMark or 0) * transUOC)
+		
+		if (transMark is not None or any(transGrade in word for word in wam)):
+			markDenom = markDenom + int(transUOC or 0)
+
+	# prints out the last line of UOC and WAM
+	print(f"UOC = {uoc}, WAM = {round(marks/markDenom,1)}")
+    
+except Exception as err:
+	print("DB error: ", err)
+finally:
+	if db:
+		db.close()
+

@@ -1,0 +1,45 @@
+5123788 Greenfield, Drew
+  8543 Master of Information Technology
+  COMPSS Data Science and Engineering
+
+Completed:
+('COMP9021', '17s1', 'Principles of Programming', 100, 'HD', 6)
+('COMP9311', '17s1', 'Database Systems', 63, 'PS', 6)
+('COMP9024', '17s2', 'Data Structures & Algorithms', 86, 'HD', 6)
+('COMP9331', '17s2', 'Computer Networks&Applications', 79, 'DN', 6)
+('GSOE9820', '17s2', 'Project Management', 94, 'HD', 6)
+('COMP9020', '18s1', 'Foundations of Comp. Science', 85, 'HD', 6)
+('COMP9414', '18s1', 'Artificial Intelligence', 91, 'HD', 6)
+('COMP9315', '18s2', "Database Systems Implementat'n", 76, 'DN', 6)
+COMP9315 18s2 Database Systems Implementat'n   76 DN   6uoc towards COMPSS Databases Electives
+('COMP9444', '18s2', 'Neural Networks, Deep Learning', 63, 'PS', 6)
+COMP9444 18s2 Neural Networks, Deep Learning   63 PS   6uoc towards COMPSS Machine Learning Electives
+('COMP9417', '19T2', 'Machine Learning & Data Mining', 96, 'HD', 6)
+COMP9417 19T2 Machine Learning & Data Mining   96 HD   6uoc towards COMPSS Machine Learning Electives
+('COMP9313', '19T3', 'Big Data Management', 76, 'DN', 6)
+COMP9313 19T3 Big Data Management              76 DN   6uoc towards COMPSS Databases Electives
+('MATH5846', '20T1', 'Intro to Prob and Stoch Proc', None, 'SY', 6)
+('MATH5856', '20T1', 'Intro to Stats and Stat Comput', None, 'SY', 6)
+('COMP9900', '20T2', 'Info Tech Project', 100, 'HD', 6)
+('MATH5855', '20T3', 'Multivariate Analysis', 100, 'HD', 6)
+MATH5855 20T3 Multivariate Analysis           100 HD   6uoc towards COMPSS Algos/Stats Electives
+UOC = 90 so far
+
+Remaining to complete degree:
+- COMP4141 Theory of Computation
+- COMP6741 Parameterized & Exact Comp.
+- MATH5845 Time Series
+- MATH5905 Statistical Inference
+- MATH5960 Bayesian Inference & Comput'n
+- COMP9318 Data Warehousing & Data Mining
+- COMP9319 Web Data Compression & Search
+- COMP9321 Data Services Engineering
+- COMP4418 Knowledge Representation
+- COMP6714 Info Retrieval and Web Search
+- MATH5836 Data Mining
+- BINF6### ???
+- BINF9### ???
+- COMP4### ???
+- COMP6### ???
+- COMP9### ???
+- GSOE92## ???

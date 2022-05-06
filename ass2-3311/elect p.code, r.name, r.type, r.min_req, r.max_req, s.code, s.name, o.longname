@@ -1,0 +1,63 @@
+               name                | type | min_req | max_req |  code  |             name             |                  longname                  
+-----------------------------------+------+---------+---------+--------+------------------------------+--------------------------------------------
+ COMPA1 Computing Electives        | PE   |      30 |         | COMPA1 | Computer Science             | School of Computer Science and Engineering
+ COMPA1 Free Electives             | FE   |      36 |         | COMPA1 | Computer Science             | School of Computer Science and Engineering
+ COMPAS Core                       | CC   |         |         | COMPAS | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPAS Electives                  | PE   |      18 |      18 | COMPAS | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPAS Disciplinary Electives     | PE   |         |       6 | COMPAS | Artificial Intelligence      | School of Computer Science and Engineering
+ Foundational Computing            | CC   |         |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBH Maths                      | CC   |         |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBH Physics and Electronics    | CC   |         |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBH Design                     | CC   |         |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBH Advanced Core              | CC   |         |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBH Computing Electives        | PE   |      36 |         | COMPBH | Computer Engineering         | School of Computer Science and Engineering
+ COMPBS Core                       | CC   |         |         | COMPBS | Bioinformatics               | School of Computer Science and Engineering
+ COMPBS Electives                  | PE   |      18 |      18 | COMPBS | Bioinformatics               | School of Computer Science and Engineering
+ COMPBS Disciplinary Electives     | PE   |         |       6 | COMPBS | Bioinformatics               | School of Computer Science and Engineering
+ COMPCS Disciplinary Electives     | PE   |      24 |      24 | COMPCS | Computer Science             | School of Computer Science and Engineering
+ COMPD1 Core                       | CC   |         |         | COMPD1 | Database Systems             | School of Computer Science and Engineering
+ COMPD1 Electives                  | PE   |      18 |      18 | COMPD1 | Database Systems             | School of Computer Science and Engineering
+ COMPD1 Computing Electives        | PE   |       6 |         | COMPD1 | Database Systems             | School of Computer Science and Engineering
+ COMPD1 Free Electives             | FE   |      36 |         | COMPD1 | Database Systems             | School of Computer Science and Engineering
+ COMPDS Electives                  | PE   |      18 |      18 | COMPDS | Database Systems             | School of Computer Science and Engineering
+ COMPDS Disciplinary Electives     | PE   |         |      12 | COMPDS | Database Systems             | School of Computer Science and Engineering
+ COMPE1 Core                       | CC   |         |         | COMPE1 | eCommerce Systems            | School of Computer Science and Engineering
+ COMPE1 Electives                  | PE   |      18 |      18 | COMPE1 | eCommerce Systems            | School of Computer Science and Engineering
+ COMPD1 Computing Electives        | PE   |       6 |         | COMPE1 | eCommerce Systems            | School of Computer Science and Engineering
+ COMPD1 Free Electives             | FE   |      36 |         | COMPE1 | eCommerce Systems            | School of Computer Science and Engineering
+ COMPES Electives                  | PE   |      18 |      18 | COMPES | eCommerce Systems            | School of Computer Science and Engineering
+ COMPES Disciplinary Electives     | PE   |         |      12 | COMPES | eCommerce Systems            | School of Computer Science and Engineering
+ COMPI1 Core                       | CC   |         |         | COMPI1 | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPI1 Electives                  | PE   |      18 |      18 | COMPI1 | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPI1 Computing Electives        | PE   |       6 |         | COMPI1 | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPI1 Free Electives             | FE   |      36 |         | COMPI1 | Artificial Intelligence      | School of Computer Science and Engineering
+ COMPIS Electives                  | PE   |      18 |      18 | COMPIS | Internetworking              | School of Computer Science and Engineering
+ COMPDS Disciplinary Electives     | PE   |         |      12 | COMPIS | Internetworking              | School of Computer Science and Engineering
+ COMPJ1 Core                       | CC   |         |         | COMPJ1 | Programming Languages        | School of Computer Science and Engineering
+ COMPJ1 Electives                  | PE   |      18 |      18 | COMPJ1 | Programming Languages        | School of Computer Science and Engineering
+ COMPJ1 Computing Electives        | PE   |       6 |         | COMPJ1 | Programming Languages        | School of Computer Science and Engineering
+ COMPJ1 Free Electives             | FE   |      36 |         | COMPJ1 | Programming Languages        | School of Computer Science and Engineering
+ COMPN1 Core                       | CC   |         |         | COMPN1 | Computer Networks            | School of Computer Science and Engineering
+ COMPN1 Electives                  | PE   |      18 |      18 | COMPN1 | Computer Networks            | School of Computer Science and Engineering
+ COMPN1 Computing Electives        | PE   |       6 |         | COMPN1 | Computer Networks            | School of Computer Science and Engineering
+ COMPN1 Free Electives             | FE   |      36 |         | COMPN1 | Computer Networks            | School of Computer Science and Engineering
+ COMPS1 Core                       | CC   |         |         | COMPS1 | Embedded Systems             | School of Computer Science and Engineering
+ COMPS1 Electives                  | PE   |      18 |      18 | COMPS1 | Embedded Systems             | School of Computer Science and Engineering
+ COMPS1 Computing Electives        | PE   |       6 |         | COMPS1 | Embedded Systems             | School of Computer Science and Engineering
+ COMPS1 Free Electives             | FE   |      30 |         | COMPS1 | Embedded Systems             | School of Computer Science and Engineering
+ COMPSS Algos/Stats Electives      | PE   |       6 |      12 | COMPSS | Data Science and Engineering | School of Computer Science and Engineering
+ COMPSS Databases Electives        | PE   |       6 |      12 | COMPSS | Data Science and Engineering | School of Computer Science and Engineering
+ COMPSS Machine Learning Electives | PE   |       6 |      12 | COMPSS | Data Science and Engineering | School of Computer Science and Engineering
+ COMPSS Disciplinary Electives     | PE   |         |       6 | COMPSS | Data Science and Engineering | School of Computer Science and Engineering
+ COMPY1 Core                       | CC   |         |         | COMPY1 | Security Engineering         | School of Computer Science and Engineering
+ COMPY1 Electives                  | PE   |      18 |      18 | COMPY1 | Security Engineering         | School of Computer Science and Engineering
+ COMPY1 Computing Electives        | PE   |       6 |         | COMPY1 | Security Engineering         | School of Computer Science and Engineering
+ COMPY1 Free Electives             | FE   |      30 |         | COMPY1 | Security Engineering         | School of Computer Science and Engineering
+ Foundational Computing            | CC   |         |         | SENGAH | Software Engineering         | School of Computer Science and Engineering
+ SENGAH Maths                      | CC   |         |         | SENGAH | Software Engineering         | School of Computer Science and Engineering
+ SENGAH Workshops/Design           | CC   |         |         | SENGAH | Software Engineering         | School of Computer Science and Engineering
+ SENGAH Advanced Core              | CC   |         |         | SENGAH | Software Engineering         | School of Computer Science and Engineering
+ SENGAH Discipline Electives       | PE   |      36 |         | SENGAH | Software Engineering         | School of Computer Science and Engineering
+ SENGAH Free Electives             | FE   |       6 |       6 | SENGAH | Software Engineering         | School of Computer Science and Engineering
+(59 rows)
+

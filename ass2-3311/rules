@@ -1,0 +1,108 @@
+#!/usr/bin/python3
+# COMP3311 21T3 Ass2 ... print list of rules for a program or stream
+
+import sys
+import psycopg2
+import re
+from helpers import *
+
+# define any local helper functions here
+# ...
+
+### set up some globals
+
+usage = f"Usage: {sys.argv[0]} (ProgramCode|StreamCode)"
+db = None
+
+### process command-line args
+
+argc = len(sys.argv)
+if argc < 2:
+  print(usage)
+  exit(1)
+code = sys.argv[1]
+if len(code) == 4:
+  codeOf = "program"
+elif len(code) == 6:
+  codeOf = "stream"
+
+try:
+  db = psycopg2.connect("dbname=mymyunsw")
+  if codeOf == "program":
+    progInfo = getProgram(db,code)
+    if not progInfo:
+      print(f"Invalid program code {code}")
+      exit()
+
+    codeInfo = getProgramCodeInfo(db, code)
+    
+    # Converts months to years
+    years = progInfo[6] / 12
+    schoolName = getSchool(db, code)
+    print(f"{code} {progInfo[2]}, {progInfo[3]} UOC, {round(years, 1)} years")
+    print(f"- offered by {schoolName[0]}")
+    print("Academic Requirements:")
+
+    for tup in codeInfo:
+      newTup = list(tup[7].split(','))
+      
+      if (tup[5] == 'stream'):
+        print(f"1 stream(s) from {tup[1]}")
+        for subjectCode in newTup:
+          streamInfo = getStream(db, subjectCode)
+          if (streamInfo is None):
+            print(f"- {subjectCode} ???")
+          else:
+            print(f"- {subjectCode} {streamInfo[2]}")
+      
+      elif (tup[5] == 'subject'):
+        # Gen Ed or Free elective 
+        if (tup[2] == 'GE' or tup[2] == 'FE'):
+          print(f"{tup[3]} UOC of {tup[1]}")          
+
+        else:
+          if (tup[2] == 'PE'):
+            printUOCStatement(tup[1], tup[3], tup[4])
+            if (tup[6] == 'pattern'):
+              print(f"- courses matching {tup[7]}")
+              continue
+          else:
+            printCourseStatement(tup[1], tup[3], tup[4], tup[7])
+          
+          # Prints out the subject info with code and name
+          printSubjectInfo(db, newTup)  
+
+  elif codeOf == "stream":
+    strmInfo = getStream(db,code)
+    if not strmInfo:
+      print(f"Invalid stream code {code}")
+      exit()
+    
+    streamCodeInfo = getStreamCodeInfo(db, code)
+    schoolName = getSchoolStream(db, code)
+    
+    print(f"{code} {strmInfo[2]}")
+    print(f"- offered by {schoolName[0]}")
+    print("Academic Requirements:")
+
+    # Loop through streamCodeInfo
+    for tup in streamCodeInfo:
+      newTup = list(tup[7].split(','))
+
+      if (tup[2] == 'PE' or tup[2] == 'CC'):
+        printUOCStatement(tup[1], tup[3], tup[4])
+        if (tup[6] == 'pattern'):
+          print(f"- courses matching {tup[7]}")
+          continue
+
+      elif (tup[2] == 'FE'):
+        print(f"at least {tup[3]} UOC of Free Electives")
+        continue
+
+      printSubjectInfo(db, newTup)
+       
+except Exception as err:
+  print(err)
+finally:
+  if db:
+    db.close()

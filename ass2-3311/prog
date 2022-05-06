@@ -1,0 +1,152 @@
+#!/usr/bin/python3
+# COMP3311 21T3 Ass2 ... progression check for a given student
+
+import sys
+import psycopg2
+import re
+from helpers import *
+
+# define any local helper functions here
+
+### set up some globals
+
+# Displays on transcripts
+fails = ['AF', 'FL', 'UF', 'E', 'F']
+Xuoc = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+nothing = ['AS', 'AW', 'PW', 'NA', 'RD', 'NF', 'LE', 'PE', 'WD', 'WJ']
+
+# Rules on passing to calculate UOC and WAM
+rule = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+x_uoc = ['A', 'B', 'C', 'D', 'HD', 'DN', 'CR', 'PS', 'XE', 'T', 'SY', 'EC', 'RC', 'NC']
+wam = ['HD', 'DN', 'CR', 'PS', 'AF', 'FL', 'UF', 'E', 'F']
+
+usage = f"Usage: {sys.argv[0]} zID [Program Stream]"
+db = None
+
+### process command-line args
+
+argc = len(sys.argv)
+if argc < 2:
+  print(usage)
+  exit(1)
+zid = sys.argv[1]
+if zid[0] == 'z':
+  zid = zid[1:8]
+digits = re.compile("^\d{7}$")
+if not digits.match(zid):
+  print("Invalid student ID")
+  exit(1)
+
+progCode = None
+strmCode = None
+
+if argc == 4:
+  progCode = sys.argv[2]
+  strmCode = sys.argv[3]
+
+# manipulate database
+
+try:
+  db = psycopg2.connect("dbname=mymyunsw")
+  stuInfo = getStudent(db,zid)
+  #print(stuInfo) # debug
+  if not stuInfo:
+    print(f"Invalid student id {zid}")
+    exit()
+
+  if progCode:
+    progInfo = getProgram(db,progCode)
+    if not progInfo:
+      print(f"Invalid program code {progCode}")
+      exit()
+  else:
+    progCode = getRecentProgram(db, zid)
+    progInfo = getProgram(db,str(progCode[0]))
+
+  if strmCode:
+    strmInfo = getStream(db,strmCode)
+    if not strmInfo:
+      print(f"Invalid program code {strmCode}")
+      exit()
+  else:
+    strmCode = getRecentStream(db, zid)
+    strmInfo = getStream(db,str(strmCode[0]))
+
+  # Print student information
+  print(f"{stuInfo[0]} {stuInfo[1]}, {stuInfo[2]}")
+  print(f"  {progInfo[0]} {progInfo[2]}")
+  print(f"  {strmInfo[1]} {strmInfo[2]}\n")
+
+  print("Completed:")
+  transInfo = getTrans(db, zid)
+  uoc = 0
+
+  programRules = getProgramCodeInfo(db, str(progCode[0]))
+  streamRules = getStreamCodeInfo(db, str(strmCode[0]))
+  #print(programRules)
+  #print(streamRules)
+
+  # Appends course codes to a rules list
+  rulesList = []
+  for tup in streamRules:
+    rulesList.extend(tup[7].split(','))
+
+  for trans in transInfo:
+    print(trans)
+    # Assigning variables to columns
+    transCode = trans[0]
+    transTerm = trans[1]
+    transSubject = trans[2]
+    transMark = trans[3]
+    transGrade = trans[4]
+    transUOC = trans[5]
+
+    # Fail condition
+    if any(transGrade in word for word in fails):
+      print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}   fail does not count")
+
+    # No UOC count condition
+    elif any(transGrade in word for word in nothing):
+      print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s} 0uoc does not satisfy any rule")
+
+    # UOC count condition
+    elif any(transGrade in word for word in Xuoc):
+      for tup in streamRules:
+        newTup = list(tup[7].split(','))
+        for position in newTup:
+          if (position[0] == '{'):
+            i = 1
+            j = 9
+            if (transCode == position[i:j]):
+              print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}  {transUOC:2d}uoc towards {tup[1]}")
+              break
+            else:
+              i = i + j
+              j = i + 8
+              if (transCode == position[i:j]):
+                print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}  {transUOC:2d}uoc towards {tup[1]}")
+                break
+          elif transCode == position:
+            print(f"{transCode} {transTerm} {transSubject:<32s}{str(transMark or '-'):>3} {transGrade:2s}  {transUOC:2d}uoc towards {tup[1]}")
+      
+      removeCompletedCourses(transCode, rulesList)
+      #print(rulesList) #debug
+
+    # If grade is counted towards uoc, increment 
+    if any(transGrade in word for word in x_uoc):
+      uoc += transUOC
+    
+  print(f"UOC = {uoc} so far\n")
+
+  if not rulesList:
+    print("Eligible to graduate")
+
+  print("Remaining to complete degree:")
+  printSubjectInfo(db, rulesList)
+
+except Exception as err:
+  print("DB error: ", err)
+finally:
+  if db:
+    db.close()
+
